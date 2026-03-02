@@ -10,18 +10,47 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Models\Kategori;
 use App\Models\Buku;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\BarangController;
 
 
+Route::post('/barang/cetak', [BarangController::class, 'cetakLabel'])
+    ->name('barang.cetak');
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::resource('barang', BarangController::class)
+        ->except(['show']);
+
+});
 
 
-Route::get('/pdf/sertifikat', [PdfController::class, 'sertifikat']);
-Route::get('/pdf/pengumuman', [PdfController::class, 'pengumuman']);
+//sertif
+Route::get('/sertifikat', [PdfController::class, 'index'])
+        ->name('pdf.sertifikat.index');
+
+Route::get('/sertifikat/{id}/preview', [PdfController::class, 'preview'])
+        ->name('pdf.sertifikat.preview');
+
+Route::get('/sertifikat/{id}/download', [PdfController::class, 'download'])
+        ->name('pdf.sertifikat.download');
+
+// pengumuman
+Route::get('/pengumuman', [PdfController::class, 'pengumumanIndex'])
+        ->name('pdf.pengumuman.index');
+
+Route::get('/pengumuman/{id}/preview', [PdfController::class, 'pengumumanPreview'])
+        ->name('pdf.pengumuman.preview');
+
+Route::get('/pengumuman/{id}/download', [PdfController::class, 'pengumumanDownload'])
+        ->name('pdf.pengumuman.download');
 
 
 Auth::routes();
 
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+
 
 /*
 login google
@@ -121,3 +150,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+Route::post('/tes-mutlak', function () {
+    dd('ROUTE NORMAL! Server dan Laravel aman.');
+});

@@ -44,5 +44,27 @@
             </a>
         </li>
 
+        <li class="nav-item {{ request()->routeIs('barang.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('barang.index') }}">
+                <span class="menu-title">Barang</span>
+                <i class="mdi mdi-cube menu-icon"></i>
+            </a>
+        </li>
+
+        {{-- SERTIFIKAT --}}
+        <li class="nav-item {{ request()->routeIs('pdf.sertifikat.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('pdf.sertifikat.index') }}">
+                <span class="menu-title">Sertifikat</span>
+                <i class="mdi mdi-file-pdf menu-icon"></i>
+            </a>
+        </li>
+
+        {{-- Undangan --}}
+        <li class="nav-item {{ request()->routeIs('pdf.pengumuman.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('pdf.pengumuman.index') }}">
+                <span class="menu-title">Undangan</span>
+                <i class="mdi mdi-file-pdf menu-icon"></i>
+            </a>
+        </li>
     </ul>
 </nav>
