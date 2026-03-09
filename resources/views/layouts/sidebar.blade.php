@@ -1,7 +1,5 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
-
-        
         <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
                 <div class="nav-profile-image">
@@ -65,6 +63,28 @@
                 <span class="menu-title">Undangan</span>
                 <i class="mdi mdi-file-pdf menu-icon"></i>
             </a>
+        </li>
+
+        {{-- Modul 4 --}}
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-modul4" aria-expanded="false" aria-controls="ui-modul4">
+                <span class="menu-title">Modul 4</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            </a>
+            <div class="collapse" id="ui-modul4">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('modul4.html-table') }}">1. Tabel HTML</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('modul4.datatables') }}">2. DataTables</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('modul4.select') }}">3. Select & Select2</a>
+                    </li>
+                </ul>
+            </div>
         </li>
     </ul>
 </nav>

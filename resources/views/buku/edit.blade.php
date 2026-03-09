@@ -11,14 +11,14 @@
 
                 <h4 class="card-title">Edit Buku</h4>
 
-                <form action="{{ route('buku.update', $buku->idbuku) }}" method="POST">
+                <form action="{{ route('buku.update', $buku->idbuku) }}" method="POST" id="formEditBuku">
                     @csrf
                     @method('PUT')
 
                     {{-- KATEGORI --}}
                     <div class="form-group">
                         <label>Kategori</label>
-                        <select name="idkategori" class="form-control" required>
+                        <select name="idkategori" id="idkategori" class="form-control" required>
                             <option value="">-- Pilih Kategori --</option>
                             @foreach($kategori as $k)
                                 <option value="{{ $k->idkategori }}"
@@ -33,7 +33,7 @@
                     <div class="form-group mt-3">
                         <label>Kode</label>
                         <input type="text"
-                               name="kode"
+                               name="kode" id="kode"
                                class="form-control"
                                value="{{ $buku->kode }}"
                                required>
@@ -43,7 +43,7 @@
                     <div class="form-group mt-3">
                         <label>Judul</label>
                         <input type="text"
-                               name="judul"
+                               name="judul" id="judul"
                                class="form-control"
                                value="{{ $buku->judul }}"
                                required>
@@ -53,23 +53,25 @@
                     <div class="form-group mt-3">
                         <label>Pengarang</label>
                         <input type="text"
-                               name="pengarang"
+                               name="pengarang" id="pengarang"
                                class="form-control"
                                value="{{ $buku->pengarang }}"
                                required>
                     </div>
 
-                    <button type="submit"
-                            class="btn btn-gradient-primary mt-3">
-                        Update
-                    </button>
-
-                    <a href="{{ route('buku.index') }}"
-                       class="btn btn-light mt-3">
-                        Kembali
-                    </a>
-
                 </form>
+
+                <button type="button"
+                        id="btnSubmitBukuEdit"
+                        onclick="submitForm('formEditBuku', 'btnSubmitBukuEdit')"
+                        class="btn btn-gradient-primary mt-3">
+                    Update
+                </button>
+
+                <a href="{{ route('buku.index') }}"
+                   class="btn btn-light mt-3">
+                    Kembali
+                </a>
 
             </div>
         </div>

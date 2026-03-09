@@ -11,12 +11,12 @@
 
                 <h4 class="card-title">Tambah Buku</h4>
 
-                <form action="{{ route('buku.store') }}" method="POST">
+                <form action="{{ route('buku.store') }}" method="POST" id="formCreateBuku">
                     @csrf
 
                     <div class="form-group">
                         <label>Kategori</label>
-                        <select name="idkategori" class="form-control" required>
+                        <select name="idkategori" id="idkategori" class="form-control" required>
                             <option value="">-- Pilih Kategori --</option>
                             @foreach($kategori as $k)
                                 <option value="{{ $k->idkategori }}">
@@ -29,7 +29,7 @@
                     <div class="form-group mt-3">
                         <label>Kode</label>
                         <input type="text"
-                               name="kode"
+                               name="kode" id="kode"
                                class="form-control"
                                required>
                     </div>
@@ -37,7 +37,7 @@
                     <div class="form-group mt-3">
                         <label>Judul</label>
                         <input type="text"
-                               name="judul"
+                               name="judul" id="judul"
                                class="form-control"
                                required>
                     </div>
@@ -45,17 +45,19 @@
                     <div class="form-group mt-3">
                         <label>Pengarang</label>
                         <input type="text"
-                               name="pengarang"
+                               name="pengarang" id="pengarang"
                                class="form-control"
                                required>
                     </div>
 
-                    <button type="submit"
-                            class="btn btn-gradient-primary mt-3">
-                        Simpan
-                    </button>
-
                 </form>
+
+                <button type="button"
+                        id="btnSubmitBukuAdd"
+                        onclick="submitForm('formCreateBuku', 'btnSubmitBukuAdd')"
+                        class="btn btn-gradient-primary mt-3">
+                    Simpan
+                </button>
 
             </div>
         </div>

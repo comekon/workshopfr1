@@ -47,5 +47,25 @@
 
 @stack('js-page')
 
+<script>
+function submitForm(formId, btnId) {
+    let form = document.getElementById(formId);
+    let btn = document.getElementById(btnId);
+    
+    if(!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    
+    let originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+    btn.disabled = true;
+    
+    setTimeout(() => {
+        form.submit();
+    }, 500); // little delay to see the spinner
+}
+</script>
+
 </body>
 </html>

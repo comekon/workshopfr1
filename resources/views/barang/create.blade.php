@@ -8,22 +8,23 @@
     <div class="card-body">
         <h4>Tambah Barang</h4>
 
-        <form action="{{ route('barang.store') }}" method="POST">
+        <form action="{{ route('barang.store') }}" method="POST" id="formCreateBarang">
             @csrf
 
             <div class="form-group">
                 <label>Nama Barang</label>
-                <input type="text" name="nama_barang" class="form-control">
+                <input type="text" name="nama_barang" id="nama_barang" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>Harga</label>
-                <input type="number" name="harga" class="form-control">
+                <input type="number" name="harga" id="harga" class="form-control" required>
             </div>
 
-            <button class="btn btn-success mt-3">Simpan</button>
-            <a href="{{ route('barang.index') }}" class="btn btn-secondary mt-3">Kembali</a>
         </form>
+
+        <button class="btn btn-success mt-3" type="button" id="btnSubmitCreate" onclick="submitForm('formCreateBarang', 'btnSubmitCreate')">Simpan</button>
+        <a href="{{ route('barang.index') }}" class="btn btn-secondary mt-3">Kembali</a>
     </div>
 </div>
 

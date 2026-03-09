@@ -11,7 +11,7 @@
 
                 <h4 class="card-title">Edit Kategori</h4>
 
-                <form action="{{ route('kategori.update', $kategori->idkategori) }}" method="POST">
+                <form action="{{ route('kategori.update', $kategori->idkategori) }}" method="POST" id="formEditKategori">
                     @csrf
                     @method('PUT')
 
@@ -19,17 +19,20 @@
                         <label>Nama Kategori</label>
                         <input type="text"
                                name="nama_kategori"
+                               id="nama_kategori"
                                class="form-control"
                                value="{{ $kategori->nama_kategori }}"
                                required>
                     </div>
 
-                    <button type="submit"
-                            class="btn btn-gradient-primary mt-3">
-                        Update
-                    </button>
-
                 </form>
+
+                <button type="button"
+                        id="btnSubmitKategoriEdit"
+                        onclick="submitForm('formEditKategori', 'btnSubmitKategoriEdit')"
+                        class="btn btn-gradient-primary mt-3">
+                    Update
+                </button>
 
             </div>
         </div>

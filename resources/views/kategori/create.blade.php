@@ -11,23 +11,26 @@
 
                 <h4 class="card-title">Tambah Kategori</h4>
 
-                <form action="{{ route('kategori.store') }}" method="POST">
+                <form action="{{ route('kategori.store') }}" method="POST" id="formCreateKategori">
                     @csrf
 
                     <div class="form-group">
                         <label>Nama Kategori</label>
                         <input type="text"
                                name="nama_kategori"
+                               id="nama_kategori"
                                class="form-control"
                                required>
                     </div>
 
-                    <button type="submit"
-                            class="btn btn-gradient-primary mt-3">
-                        Simpan
-                    </button>
-
                 </form>
+
+                <button type="button"
+                        id="btnSubmitKategoriAdd"
+                        onclick="submitForm('formCreateKategori', 'btnSubmitKategoriAdd')"
+                        class="btn btn-gradient-primary mt-3">
+                    Simpan
+                </button>
 
             </div>
         </div>

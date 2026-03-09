@@ -11,6 +11,7 @@ use App\Models\Kategori;
 use App\Models\Buku;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\Auth\GoogleLoginController;
 
 
 Route::post('/barang/cetak', [BarangController::class, 'cetakLabel'])
@@ -56,70 +57,11 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 login google
 */
 
-Route::get('/auth/google', function () {
-    return Socialite::driver('google')->redirect();
-});
+Route::get('/auth/google', [GoogleLoginController::class, 'redirect']);
+Route::get('/auth/google/callback', [GoogleLoginController::class, 'callback']);
 
-Route::get('/auth/google/callback', function () {
-
-    $googleUser = Socialite::driver('google')->stateless()->user();
-
-    $user = User::updateOrCreate(
-        ['email' => $googleUser->email],
-        [
-            'nama' => $googleUser->name,
-            'id_google' => $googleUser->id,
-            'password' => bcrypt('google_login')
-        ]
-    );
-
-    
-    $otp = rand(100000, 999999);
-
-    $user->update([
-        'otp' => $otp,
-        'otp_expired_at' => now()->addMinutes(5)
-    ]);
-
-    
-    \Mail::raw("Kode OTP Login Kamu: $otp", function($message) use ($user){
-        $message->to($user->email)
-                ->subject('Kode OTP Login');
-    });
-
-    
-    session(['otp_user_id' => $user->id]);
-
-    
-    return redirect('/otp');
-});
-
-
-
-
-Route::get('/otp', function () {
-    return view('auth.otp');
-});
-
-Route::post('/otp', function (Illuminate\Http\Request $request) {
-
-    $user = App\Models\User::find(session('otp_user_id'));
-
-    if (!$user) return redirect('/login');
-
-    if ($request->otp == $user->otp) {
-
-        Auth::login($user);
-
-        $user->update([
-            'otp' => null
-        ]);
-
-        return redirect('/');
-    }
-
-    return back()->withErrors(['otp' => 'OTP salah']);
-});
+Route::get('/otp', [GoogleLoginController::class, 'otpIndex']);
+Route::post('/otp', [GoogleLoginController::class, 'otpVerify']);
 
 
 
@@ -153,3 +95,16 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/tes-mutlak', function () {
     dd('ROUTE NORMAL! Server dan Laravel aman.');
 });
+
+// Modul 4 Routes
+Route::get('/modul4/html-table', function () {
+    return view('modul4.html-table');
+})->name('modul4.html-table');
+
+Route::get('/modul4/datatables', function () {
+    return view('modul4.datatables');
+})->name('modul4.datatables');
+
+Route::get('/modul4/select', function () {
+    return view('modul4.select');
+})->name('modul4.select');
