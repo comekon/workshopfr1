@@ -12,6 +12,8 @@ use App\Models\Buku;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\Auth\GoogleLoginController;
+use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\PosController;
 
 
 Route::post('/barang/cetak', [BarangController::class, 'cetakLabel'])
@@ -108,3 +110,41 @@ Route::get('/modul4/datatables', function () {
 Route::get('/modul4/select', function () {
     return view('modul4.select');
 })->name('modul4.select');
+
+// =============================================
+// Modul 5 - AJAX jQuery & Axios
+// =============================================
+
+// Halaman Wilayah
+Route::get('/modul5/wilayah/ajax', [WilayahController::class, 'indexAjax'])
+    ->name('modul5.wilayah.ajax');
+
+Route::get('/modul5/wilayah/axios', [WilayahController::class, 'indexAxios'])
+    ->name('modul5.wilayah.axios');
+
+// API Endpoints Wilayah (dikonsumsi AJAX / Axios dari frontend)
+Route::get('/api/wilayah/regencies/{province_id}', [WilayahController::class, 'getRegencies'])
+    ->name('api.wilayah.regencies');
+
+Route::get('/api/wilayah/districts/{regency_id}', [WilayahController::class, 'getDistricts'])
+    ->name('api.wilayah.districts');
+
+Route::get('/api/wilayah/villages/{district_id}', [WilayahController::class, 'getVillages'])
+    ->name('api.wilayah.villages');
+
+// =============================================
+// Modul 5 - POS (Point of Sales)
+// =============================================
+
+Route::get('/modul5/pos/ajax', [PosController::class, 'indexAjax'])
+    ->name('modul5.pos.ajax');
+
+Route::get('/modul5/pos/axios', [PosController::class, 'indexAxios'])
+    ->name('modul5.pos.axios');
+
+// API POS
+Route::get('/api/pos/barang/{kode}', [PosController::class, 'cariBarang'])
+    ->name('api.pos.barang');
+
+Route::post('/api/pos/bayar', [PosController::class, 'bayar'])
+    ->name('api.pos.bayar');

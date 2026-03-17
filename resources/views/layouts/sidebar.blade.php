@@ -86,5 +86,43 @@
                 </ul>
             </div>
         </li>
+
+        {{-- Modul 5 --}}
+        <li class="nav-item {{ request()->routeIs('modul5.*') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-modul5" aria-expanded="{{ request()->routeIs('modul5.*') ? 'true' : 'false' }}" aria-controls="ui-modul5">
+                <span class="menu-title">Modul 5</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-ajax menu-icon"></i>
+            </a>
+            <div class="collapse {{ request()->routeIs('modul5.*') ? 'show' : '' }}" id="ui-modul5">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('modul5.wilayah.ajax') ? 'active' : '' }}"
+                           href="{{ route('modul5.wilayah.ajax') }}">
+                           1. Wilayah (AJAX)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('modul5.wilayah.axios') ? 'active' : '' }}"
+                           href="{{ route('modul5.wilayah.axios') }}">
+                           2. Wilayah (Axios)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('modul5.pos.ajax') ? 'active' : '' }}"
+                           href="{{ route('modul5.pos.ajax') }}">
+                           3. POS (AJAX)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('modul5.pos.axios') ? 'active' : '' }}"
+                           href="{{ route('modul5.pos.axios') }}">
+                           4. POS (Axios)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     </ul>
 </nav>
+
