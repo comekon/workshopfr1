@@ -14,6 +14,8 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\PosController;
+use App\Http\Controllers\KantinController;
+use App\Http\Controllers\VendorController;
 
 
 Route::post('/barang/cetak', [BarangController::class, 'cetakLabel'])
@@ -148,3 +150,30 @@ Route::get('/api/pos/barang/{kode}', [PosController::class, 'cariBarang'])
 
 Route::post('/api/pos/bayar', [PosController::class, 'bayar'])
     ->name('api.pos.bayar');
+
+// =============================================
+// Kantin Online (Customer — Tanpa Login)
+// =============================================
+Route::get('/kantin', [KantinController::class, 'index'])
+    ->name('kantin.index');
+
+Route::get('/api/kantin/menu/{vendor_id}', [KantinController::class, 'getMenuByVendor'])
+    ->name('api.kantin.menu');
+
+Route::post('/api/kantin/checkout', [KantinController::class, 'checkout'])
+    ->name('api.kantin.checkout');
+
+Route::post('/api/kantin/notification', [KantinController::class, 'handleNotification'])
+    ->name('api.kantin.notification');
+
+Route::get('/kantin/success/{order_id}', [KantinController::class, 'paymentSuccess'])
+    ->name('kantin.success');
+
+// =============================================
+// Vendor Panel (Login Required)
+// =============================================
+Route::middleware(['auth'])->prefix('vendor')->name('vendor.')->group(function () {
+    Route::get('/dashboard', [VendorController::class, 'dashboard'])->name('dashboard');
+    Route::resource('menu', VendorController::class)->except(['show']);
+    Route::get('/pesanan-lunas', [VendorController::class, 'pesananLunas'])->name('pesanan.lunas');
+});

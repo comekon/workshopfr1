@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Vendor;
 
 
 
@@ -40,6 +41,22 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    /**
+     * Override redirect setelah login.
+     * Jika user adalah vendor, arahkan ke vendor dashboard.
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // Cek apakah user ini adalah vendor
+        $isVendor = Vendor::where('user_id', $user->id)->exists();
+
+        if ($isVendor) {
+            return redirect()->route('vendor.dashboard');
+        }
+
+        return redirect()->intended($this->redirectPath());
     }
 
 

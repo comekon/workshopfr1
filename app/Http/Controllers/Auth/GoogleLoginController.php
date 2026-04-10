@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -65,6 +66,13 @@ class GoogleLoginController extends Controller
             $user->update([
                 'otp' => null
             ]);
+
+            // Cek apakah user ini adalah vendor, jika ya arahkan ke vendor dashboard
+            $isVendor = Vendor::where('user_id', $user->id)->exists();
+
+            if ($isVendor) {
+                return redirect()->route('vendor.dashboard');
+            }
 
             return redirect('/');
         }

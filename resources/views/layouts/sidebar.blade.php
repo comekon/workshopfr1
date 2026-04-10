@@ -123,6 +123,53 @@
                 </ul>
             </div>
         </li>
+
+        {{-- Kantin Online (Customer View) --}}
+        <li class="nav-item {{ request()->routeIs('kantin.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('kantin.index') }}">
+                <span class="menu-title">Kantin Online</span>
+                <i class="mdi mdi-food-variant menu-icon"></i>
+            </a>
+        </li>
+
+        <!-- {{-- Kantin Online (Customer View) --}}
+        <li class="nav-item {{ request()->routeIs('kantin.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('kantin.index') }}" target="_blank">
+                <span class="menu-title">Kantin Online</span>
+                <i class="mdi mdi-food-variant menu-icon"></i>
+            </a>
+        </li>
+
+        {{-- Kantin Vendor --}}
+        <li class="nav-item {{ request()->routeIs('vendor.*') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-kantin" aria-expanded="{{ request()->routeIs('vendor.*') ? 'true' : 'false' }}" aria-controls="ui-kantin">
+                <span class="menu-title">Kantin (Vendor)</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-food menu-icon"></i>
+            </a>
+            <div class="collapse {{ request()->routeIs('vendor.*') ? 'show' : '' }}" id="ui-kantin">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('vendor.dashboard') ? 'active' : '' }}"
+                           href="{{ route('vendor.dashboard') }}">
+                           Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('vendor.menu.*') ? 'active' : '' }}"
+                           href="{{ route('vendor.menu.index') }}">
+                           Master Menu
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('vendor.pesanan.*') ? 'active' : '' }}"
+                           href="{{ route('vendor.pesanan.lunas') }}">
+                           Pesanan Lunas
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li> -->
     </ul>
 </nav>
 
