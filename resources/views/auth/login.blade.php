@@ -69,6 +69,15 @@
             </a>
         </div>
 
+        {{-- KANTIN ONLINE --}}
+        <div class="mb-2 d-grid gap-2">
+            <a href="{{ route('kantin.index') }}"
+               class="btn btn-success w-100">
+                <i class="mdi mdi-store me-2"></i>
+                Kantin Online
+            </a>
+        </div>
+
         {{-- REGISTER --}}
         <div class="text-center mt-4 font-weight-light">
             Don't have an account?

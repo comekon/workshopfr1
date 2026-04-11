@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.kantin-public')
 
 @section('title', 'Kantin Online — Pesan Sekarang')
 
@@ -106,8 +106,7 @@
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Kantin</li>
+                <li class="breadcrumb-item active" aria-current="page">Pesan Menu</li>
             </ul>
         </nav>
     </div>
