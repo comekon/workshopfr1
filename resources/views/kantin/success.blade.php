@@ -2,6 +2,20 @@
 
 @section('title', 'Pembayaran Berhasil — Kantin Online')
 
+@php
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+
+function generateQrCode($text) {
+    $writer = new PngWriter();
+    $qrCode = new QrCode($text);
+    $qrCode->setSize(200);
+    $qrCode->setMargin(10);
+    $result = $writer->write($qrCode);
+    return $result->getDataUri();
+}
+@endphp
+
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-8">
@@ -85,6 +99,16 @@
                             </tr>
                         </tfoot>
                     </table>
+                </div>
+
+                {{-- QR CODE --}}
+                <div class="mt-4 mb-3">
+                    <h5 class="fw-bold mb-2">Scan QR Code</h5>
+                    <p class="text-muted small mb-2">Scan untuk melihat detail pesanan</p>
+                    <div class="bg-white rounded-3 p-3 d-inline-block shadow-sm">
+                        <img src="{{ generateQrCode($pesanan->idpesanan) }}" alt="QR Code" style="width:150px;height:150px;">
+                    </div>
+                    <p class="text-muted small mt-2 font-monospace">ID: {{ $pesanan->idpesanan }}</p>
                 </div>
 
                 <a href="{{ route('kantin.index') }}" class="btn btn-gradient-primary btn-lg mt-4 px-5">

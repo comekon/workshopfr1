@@ -16,6 +16,7 @@ use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\KantinController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\CustomerController;
 
 
 Route::post('/barang/cetak', [BarangController::class, 'cetakLabel'])
@@ -168,6 +169,18 @@ Route::post('/api/kantin/notification', [KantinController::class, 'handleNotific
 
 Route::get('/kantin/success/{order_id}', [KantinController::class, 'paymentSuccess'])
     ->name('kantin.success');
+
+// =============================================
+// Customer (Studi Kasus 3)
+// =============================================
+Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(function () {
+    Route::get('/', [CustomerController::class, 'index'])->name('index');
+    Route::get('/create1', [CustomerController::class, 'create1'])->name('create1');
+    Route::post('/store1', [CustomerController::class, 'store1'])->name('store1');
+    Route::get('/create2', [CustomerController::class, 'create2'])->name('create2');
+    Route::post('/store2', [CustomerController::class, 'store2'])->name('store2');
+    Route::get('/foto/{id}', [CustomerController::class, 'showFoto'])->name('foto');
+});
 
 // =============================================
 // Vendor Panel (Login Required)

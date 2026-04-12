@@ -635,20 +635,16 @@ function prosesCheckout() {
                         icon: 'success',
                         confirmButtonColor: '#28a745',
                     }).then(function() {
-                        window.location.href = '/kantin/success/' + res.order_id;
+                        var status = result.transaction_status || 'capture';
+                        var payment = result.payment_type || '';
+                        window.location.href = '/kantin/success/' + res.order_id + '?transaction_status=' + encodeURIComponent(status) + '&payment_type=' + encodeURIComponent(payment);
                     });
                 },
                 onPending: function(result) {
                     console.log('Payment pending:', result);
-                    Swal.fire({
-                        title: '⏳ Menunggu Pembayaran',
-                        html: 'Silahkan selesaikan pembayaran Anda.<br>' +
-                              'Order: <strong>' + res.order_id + '</strong>',
-                        icon: 'info',
-                        confirmButtonColor: '#667eea',
-                    });
-                    btn.innerHTML = '<i class="mdi mdi-credit-card-check"></i> Bayar Sekarang';
-                    btn.disabled = false;
+                    var status = result.transaction_status || 'pending';
+                    var payment = result.payment_type || '';
+                    window.location.href = '/kantin/success/' + res.order_id + '?transaction_status=' + encodeURIComponent(status) + '&payment_type=' + encodeURIComponent(payment);
                 },
                 onError: function(result) {
                     console.error('Payment error:', result);

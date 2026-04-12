@@ -212,7 +212,7 @@ class KantinController extends Controller
     /**
      * Halaman sukses pembayaran
      */
-    public function paymentSuccess($orderId)
+    public function paymentSuccess(Request $request, $orderId)
     {
         $pesanan = Pesanan::where('midtrans_order_id', $orderId)
             ->with('detailPesanans.menu')
@@ -222,6 +222,44 @@ class KantinController extends Controller
             abort(404);
         }
 
+        // Update status dari parameter Midtrans (saat user kembali dari pembayaran)
+        $transactionStatus = $request->get('transaction_status');
+        $paymentType = $request->get('payment_type');
+
+        if ($transactionStatus) {
+            $statusBayar = 0; // default pending
+
+            if (in_array($transactionStatus, ['capture', 'settlement'])) {
+                $statusBayar = 1; // lunas
+            } elseif (in_array($transactionStatus, ['cancel', 'deny', 'expire'])) {
+                $statusBayar = 2; // gagal
+            }
+
+            $metodeBayar = $this->mapPaymentType($paymentType);
+
+            $pesanan->update([
+                'status_bayar' => $statusBayar,
+                'metode_bayar' => $metodeBayar,
+            ]);
+
+            // Refresh data
+            $pesanan->refresh();
+        }
+
         return view('kantin.success', compact('pesanan'));
+    }
+
+    /**
+     * Mapping payment type Midtrans ke kode metode bayar
+     */
+    private function mapPaymentType($paymentType)
+    {
+        if (str_contains($paymentType, 'bank_transfer')) return 1; // VA
+        if (str_contains($paymentType, 'echannel')) return 1; // Mandiri VA
+        if ($paymentType == 'qris') return 2; // QRIS
+        if ($paymentType == 'gopay') return 2; // GoPay masuk QRIS
+        if (str_contains($paymentType, 'credit_card')) return 3; // CC
+
+        return 0; // default
     }
 }

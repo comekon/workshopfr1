@@ -2,6 +2,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+@php
+use Picqer\Barcode\BarcodeGeneratorPNG;
+
+function generateBarcode($text) {
+    $generator = new BarcodeGeneratorPNG();
+    $barcode = $generator->getBarcode($text, $generator::TYPE_CODE_128, 1.5, 25);
+    return 'data:image/png;base64,' . base64_encode($barcode);
+}
+@endphp
 <style>
 @page {
     size: 210mm 165mm;
@@ -48,11 +57,28 @@ body {
     height: 18mm;
 }
 
+.barcode-img {
+    display: block;
+    margin: 0 auto;
+    height: 20px;
+    max-width: 95%;
+}
+
+.id-barang {
+    font-size: 8px;
+    font-family: monospace;
+    display: block;
+    margin-top: 0;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
 .nama-barang {
-    font-size: 11px;
+    font-size: 9px;
     font-weight: bold;
     display: block;
-    margin-bottom: 1px;
+    margin-top: 1px;
+    line-height: 1.1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -60,9 +86,10 @@ body {
 }
 
 .harga-barang {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     display: block;
+    line-height: 1;
 }
 </style>
 </head>
@@ -97,6 +124,8 @@ body {
             <div class="label-box" style="left: {{ $left }}mm; top: {{ $top }}mm;">
                 @if(isset($labels[$index]) && $labels[$index])
                 <div class="label-content">
+                    <img src="{{ generateBarcode($labels[$index]->id_barang) }}" class="barcode-img" alt="{{ $labels[$index]->id_barang }}">
+                    <span class="id-barang">{{ $labels[$index]->id_barang }}</span>
                     <span class="nama-barang">{{ $labels[$index]->nama_barang }}</span>
                     <span class="harga-barang">Rp {{ number_format($labels[$index]->harga) }}</span>
                 </div>

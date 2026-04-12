@@ -132,6 +132,34 @@
             </a>
         </li>
 
+        {{-- Customer (Studi Kasus 3) --}}
+        <li class="nav-item {{ request()->routeIs('customer.*') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-customer" aria-expanded="{{ request()->routeIs('customer.*') ? 'true' : 'false' }}" aria-controls="ui-customer">
+                <span class="menu-title">Customer</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-account menu-icon"></i>
+            </a>
+            <div class="collapse {{ request()->routeIs('customer.*') ? 'show' : '' }}" id="ui-customer">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('customer.index') ? 'active' : '' }}" href="{{ route('customer.index') }}">
+                            Data Customer
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('customer.create1') ? 'active' : '' }}" href="{{ route('customer.create1') }}">
+                            Tambah Customer 1 (BLOB)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('customer.create2') ? 'active' : '' }}" href="{{ route('customer.create2') }}">
+                            Tambah Customer 2 (File)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
         <!-- {{-- Kantin Online (Customer View) --}}
         <li class="nav-item {{ request()->routeIs('kantin.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('kantin.index') }}" target="_blank">
