@@ -262,4 +262,55 @@ class KantinController extends Controller
 
         return 0; // default
     }
+
+    /**
+     * Halaman QR Code pesanan (akses kapanpun tanpa login)
+     */
+    public function qrPage($idpesanan)
+    {
+        $pesanan = Pesanan::where('idpesanan', $idpesanan)
+            ->with('detailPesanans.menu')
+            ->first();
+
+        if (!$pesanan) {
+            abort(404);
+        }
+
+        return view('kantin.qr', compact('pesanan'));
+    }
+
+    /**
+     * API: Ambil data pesanan berdasarkan idpesanan (untuk vendor scan QR)
+     */
+    public function getPesananByQr($idpesanan)
+    {
+        $pesanan = Pesanan::where('idpesanan', $idpesanan)
+            ->with('detailPesanans.menu')
+            ->first();
+
+        if (!$pesanan) {
+            return response()->json(['status' => 'error', 'message' => 'Pesanan tidak ditemukan'], 404);
+        }
+
+        $details = $pesanan->detailPesanans->map(function ($d) {
+            return [
+                'nama_menu' => $d->menu->nama_menu ?? '-',
+                'jumlah'    => $d->jumlah,
+                'harga'     => $d->harga,
+                'subtotal'  => $d->subtotal,
+                'catatan'   => $d->catatan,
+            ];
+        });
+
+        return response()->json([
+            'status'       => 'success',
+            'idpesanan'    => $pesanan->idpesanan,
+            'nama'         => $pesanan->nama,
+            'total'        => $pesanan->total,
+            'status_bayar' => $pesanan->status_bayar,
+            'metode_bayar' => $pesanan->metode_bayar,
+            'timestamp'    => $pesanan->timestamp,
+            'detail'       => $details,
+        ]);
+    }
 }

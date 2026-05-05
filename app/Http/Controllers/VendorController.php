@@ -234,4 +234,17 @@ class VendorController extends Controller
 
         return view('vendor.pesanan-lunas', compact('vendor', 'pesanans'));
     }
+
+    /**
+     * Halaman scan QR Code untuk vendor
+     */
+    public function scanQr()
+    {
+        $vendor = $this->getVendor();
+        if (!$vendor) {
+            return redirect()->route('dashboard')->with('error', 'Anda tidak terdaftar sebagai vendor.');
+        }
+
+        return view('vendor.scan-qr', compact('vendor'));
+    }
 }

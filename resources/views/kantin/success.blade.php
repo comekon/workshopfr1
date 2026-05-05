@@ -109,6 +109,9 @@ function generateQrCode($text) {
                         <img src="{{ generateQrCode($pesanan->idpesanan) }}" alt="QR Code" style="width:150px;height:150px;">
                     </div>
                     <p class="text-muted small mt-2 font-monospace">ID: {{ $pesanan->idpesanan }}</p>
+                    <a href="{{ route('kantin.qr', $pesanan->idpesanan) }}" class="btn btn-outline-primary btn-sm mt-2" target="_blank">
+                        <i class="mdi mdi-open-in-new me-1"></i> Buka QR Code di Tab Baru
+                    </a>
                 </div>
 
                 <a href="{{ route('kantin.index') }}" class="btn btn-gradient-primary btn-lg mt-4 px-5">

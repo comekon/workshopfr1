@@ -27,13 +27,13 @@
         </li>
 
         {{-- Kantin Vendor Menu --}}
-        <li class="nav-item {{ request()->routeIs('vendor.menu.*') || request()->routeIs('vendor.pesanan.*') ? 'active' : '' }}">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-kantin" aria-expanded="{{ request()->routeIs('vendor.menu.*') || request()->routeIs('vendor.pesanan.*') ? 'true' : 'false' }}" aria-controls="ui-kantin">
+        <li class="nav-item {{ request()->routeIs('vendor.menu.*') || request()->routeIs('vendor.pesanan.*') || request()->routeIs('vendor.scan.qr') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-kantin" aria-expanded="{{ request()->routeIs('vendor.menu.*') || request()->routeIs('vendor.pesanan.*') || request()->routeIs('vendor.scan.qr') ? 'true' : 'false' }}" aria-controls="ui-kantin">
                 <span class="menu-title">Manajemen Kantin</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-food menu-icon"></i>
             </a>
-            <div class="collapse {{ request()->routeIs('vendor.menu.*') || request()->routeIs('vendor.pesanan.*') ? 'show' : '' }}" id="ui-kantin">
+            <div class="collapse {{ request()->routeIs('vendor.menu.*') || request()->routeIs('vendor.pesanan.*') || request()->routeIs('vendor.scan.qr') ? 'show' : '' }}" id="ui-kantin">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('vendor.menu.*') ? 'active' : '' }}"
@@ -45,6 +45,12 @@
                         <a class="nav-link {{ request()->routeIs('vendor.pesanan.lunas') ? 'active' : '' }}"
                            href="{{ route('vendor.pesanan.lunas') }}">
                            <i class="mdi mdi-receipt me-1"></i> Pesanan Lunas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('vendor.scan.qr') ? 'active' : '' }}"
+                           href="{{ route('vendor.scan.qr') }}">
+                           <i class="mdi mdi-qrcode-scan me-1"></i> Scan QR Pesanan
                         </a>
                     </li>
                 </ul>

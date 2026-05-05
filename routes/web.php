@@ -19,6 +19,12 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CustomerController;
 
 
+Route::get('/barang/scan', [BarangController::class, 'scan'])
+    ->name('barang.scan');
+
+Route::get('/api/barang/{id}', [BarangController::class, 'getBarang'])
+    ->name('api.barang.show');
+
 Route::post('/barang/cetak', [BarangController::class, 'cetakLabel'])
     ->name('barang.cetak');
 
@@ -170,6 +176,12 @@ Route::post('/api/kantin/notification', [KantinController::class, 'handleNotific
 Route::get('/kantin/success/{order_id}', [KantinController::class, 'paymentSuccess'])
     ->name('kantin.success');
 
+Route::get('/kantin/qr/{idpesanan}', [KantinController::class, 'qrPage'])
+    ->name('kantin.qr');
+
+Route::get('/api/kantin/pesanan/{idpesanan}', [KantinController::class, 'getPesananByQr'])
+    ->name('api.kantin.pesanan');
+
 // =============================================
 // Customer (Studi Kasus 3)
 // =============================================
@@ -189,4 +201,5 @@ Route::middleware(['auth'])->prefix('vendor')->name('vendor.')->group(function (
     Route::get('/dashboard', [VendorController::class, 'dashboard'])->name('dashboard');
     Route::resource('menu', VendorController::class)->except(['show']);
     Route::get('/pesanan-lunas', [VendorController::class, 'pesananLunas'])->name('pesanan.lunas');
+    Route::get('/scan-qr', [VendorController::class, 'scanQr'])->name('scan.qr');
 });

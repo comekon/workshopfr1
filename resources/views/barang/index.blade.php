@@ -12,6 +12,10 @@
             Tambah Barang
         </a>
 
+        <a href="{{ route('barang.scan') }}" class="btn btn-success mb-3">
+            <i class="mdi mdi-barcode-scan me-1"></i> Scan Barcode
+        </a>
+
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}

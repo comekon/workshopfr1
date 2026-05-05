@@ -61,6 +61,27 @@ class BarangController extends Controller
             ->with('success', 'Data berhasil dihapus');
     }
 
+    public function scan()
+    {
+        return view('barang.scan');
+    }
+
+    public function getBarang($id)
+    {
+        $barang = Barang::find($id);
+
+        if (!$barang) {
+            return response()->json(['status' => 'error', 'message' => 'Barang tidak ditemukan'], 404);
+        }
+
+        return response()->json([
+            'status'       => 'success',
+            'id_barang'    => $barang->id_barang,
+            'nama_barang'  => $barang->nama_barang,
+            'harga'        => $barang->harga,
+        ]);
+    }
+
     public function cetakLabel(Request $request)
     {
         $request->validate([
