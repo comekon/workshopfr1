@@ -49,6 +49,14 @@
             </a>
         </li>
 
+        {{-- Kunjungan Toko --}}
+        <li class="nav-item {{ request()->routeIs('kunjungan.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('kunjungan.index') }}">
+                <span class="menu-title">Kunjungan Toko</span>
+                <i class="mdi mdi-map-marker-radius menu-icon"></i>
+            </a>
+        </li>
+
         {{-- SERTIFIKAT --}}
         <li class="nav-item {{ request()->routeIs('pdf.sertifikat.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('pdf.sertifikat.index') }}">
@@ -198,6 +206,34 @@
                 </ul>
             </div>
         </li> -->
+        {{-- Sistem Antrian --}}
+        <li class="nav-item {{ request()->routeIs('antrian.admin') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-antrian" aria-expanded="{{ request()->routeIs('antrian.admin') ? 'true' : 'false' }}" aria-controls="ui-antrian">
+                <span class="menu-title">Sistem Antrian</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-ticket-confirmation menu-icon"></i>
+            </a>
+            <div class="collapse {{ request()->routeIs('antrian.admin') ? 'show' : '' }}" id="ui-antrian">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('antrian.admin') ? 'active' : '' }}"
+                           href="{{ route('antrian.admin') }}">
+                           Dashboard Admin
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('antrian.guest') }}" target="_blank">
+                           Halaman Guest
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('antrian.papan') }}" target="_blank">
+                           Papan Antrian
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     </ul>
 </nav>
 

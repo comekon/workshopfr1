@@ -17,6 +17,8 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\KantinController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\KunjunganController;
+use App\Http\Controllers\AntrianController;
 
 
 Route::get('/barang/scan', [BarangController::class, 'scan'])
@@ -202,4 +204,37 @@ Route::middleware(['auth'])->prefix('vendor')->name('vendor.')->group(function (
     Route::resource('menu', VendorController::class)->except(['show']);
     Route::get('/pesanan-lunas', [VendorController::class, 'pesananLunas'])->name('pesanan.lunas');
     Route::get('/scan-qr', [VendorController::class, 'scanQr'])->name('scan.qr');
+});
+
+// =============================================
+// Kunjungan Toko (Geolocation)
+// =============================================
+Route::middleware(['auth'])->group(function () {
+    Route::get('/kunjungan', [KunjunganController::class, 'index'])->name('kunjungan.index');
+    Route::post('/kunjungan', [KunjunganController::class, 'store'])->name('kunjungan.store');
+    Route::put('/kunjungan/{barcode}', [KunjunganController::class, 'update'])->name('kunjungan.update');
+    Route::delete('/kunjungan/{barcode}', [KunjunganController::class, 'destroy'])->name('kunjungan.destroy');
+    Route::post('/kunjungan/cetak', [KunjunganController::class, 'cetakLabel'])->name('kunjungan.cetak');
+});
+
+Route::get('/api/kunjungan/toko/{barcode}', [KunjunganController::class, 'apiCariToko'])
+    ->name('api.kunjungan.toko');
+
+// =============================================
+// Sistem Antrian Real-Time (SSE)
+// =============================================
+
+// Public routes
+Route::get('/guest', [AntrianController::class, 'index'])->name('antrian.guest');
+Route::post('/antrian', [AntrianController::class, 'store'])->name('antrian.store');
+Route::get('/antrian/{id}', [AntrianController::class, 'show'])->name('antrian.tiket');
+Route::get('/papan', [AntrianController::class, 'papanView'])->name('antrian.papan');
+Route::get('/sse/antrian', [AntrianController::class, 'streamSse'])->name('antrian.sse');
+
+// Admin routes (auth required)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/antrian', [AntrianController::class, 'admin'])->name('antrian.admin');
+    Route::post('/antrian/{id}/panggil', [AntrianController::class, 'panggil'])->name('antrian.panggil');
+    Route::post('/antrian/{id}/selesai', [AntrianController::class, 'selesai'])->name('antrian.selesai');
+    Route::post('/antrian/{id}/terlambat', [AntrianController::class, 'terlambat'])->name('antrian.terlambat');
 });
