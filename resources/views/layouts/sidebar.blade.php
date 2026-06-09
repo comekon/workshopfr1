@@ -206,6 +206,31 @@
                 </ul>
             </div>
         </li> -->
+        {{-- Absensi NFC --}}
+        <li class="nav-item {{ request()->routeIs('absensi.*') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-absensi" aria-expanded="{{ request()->routeIs('absensi.*') ? 'true' : 'false' }}" aria-controls="ui-absensi">
+                <span class="menu-title">Absensi NFC</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-nfc menu-icon"></i>
+            </a>
+            <div class="collapse {{ request()->routeIs('absensi.*') ? 'show' : '' }}" id="ui-absensi">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('absensi.index') ? 'active' : '' }}"
+                           href="{{ route('absensi.index') }}">
+                           Scanner
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('absensi.admin') ? 'active' : '' }}"
+                           href="{{ route('absensi.admin') }}">
+                           Admin
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
         {{-- Sistem Antrian --}}
         <li class="nav-item {{ request()->routeIs('antrian.admin') ? 'active' : '' }}">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-antrian" aria-expanded="{{ request()->routeIs('antrian.admin') ? 'true' : 'false' }}" aria-controls="ui-antrian">

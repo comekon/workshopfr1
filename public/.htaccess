@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    # Ngrok header bypass
+    RequestHeader set ngrok-skip-browser-warning "true" env=early
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

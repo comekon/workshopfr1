@@ -19,6 +19,7 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\AntrianController;
+use App\Http\Controllers\AbsensiController;
 
 
 Route::get('/barang/scan', [BarangController::class, 'scan'])
@@ -237,4 +238,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/antrian/{id}/panggil', [AntrianController::class, 'panggil'])->name('antrian.panggil');
     Route::post('/antrian/{id}/selesai', [AntrianController::class, 'selesai'])->name('antrian.selesai');
     Route::post('/antrian/{id}/terlambat', [AntrianController::class, 'terlambat'])->name('antrian.terlambat');
+});
+
+// =============================================
+// Sistem Absensi NFC
+// =============================================
+Route::prefix('absensi')->name('absensi.')->group(function () {
+    Route::get('/', [AbsensiController::class, 'index'])->name('index');
+    Route::post('/scan', [AbsensiController::class, 'scan'])->name('scan');
+    Route::get('/admin', [AbsensiController::class, 'admin'])->name('admin');
+    Route::post('/admin/mahasiswa', [AbsensiController::class, 'storeMahasiswa'])->name('admin.mahasiswa.store');
+    Route::put('/admin/mahasiswa/{id}', [AbsensiController::class, 'updateMahasiswa'])->name('admin.mahasiswa.update');
+    Route::delete('/admin/mahasiswa/{id}', [AbsensiController::class, 'destroyMahasiswa'])->name('admin.mahasiswa.destroy');
+    Route::post('/admin/kartu', [AbsensiController::class, 'storeKartu'])->name('admin.kartu.store');
+    Route::delete('/admin/kartu/{id}', [AbsensiController::class, 'destroyKartu'])->name('admin.kartu.destroy');
+    Route::get('/admin/rekap', [AbsensiController::class, 'rekap'])->name('admin.rekap');
 });
